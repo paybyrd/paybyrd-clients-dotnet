@@ -4,12 +4,12 @@ namespace Paybyrd.Clients.Webhook.Contracts;
 
 internal class WebhookAttempt : IWebhookAttempt
 {
-    public string Id { get; init; } = string.Empty;
-    public string AttemptId { get; init; } = string.Empty;
-    public DateTime CreatedAt { get; init; }
-    public string Event { get; init; } = string.Empty;
-    public string PaymentMethod { get; init; } = string.Empty;
-    public IWebhookAttemptSettings Settings { get; init; } = null!;
-    public object Content { get; init; } = null!;
-    public IWebhookAttemptResponse Response { get; init; } = null!;
+    public string Id { get; set; } = string.Empty;
+    public string AttemptId { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public string Event { get; set; } = string.Empty;
+    public string PaymentMethod { get; set; } = string.Empty;
+    public IWebhookAttemptSettings Settings { get; set; } = null!;
+    public object Content { get; set; } = null!;
+    public IWebhookAttemptResponse Response { get; set; } = null!;
 }

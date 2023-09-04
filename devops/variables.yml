@@ -1,0 +1,5 @@
+variables:
+  - name: artifact_name
+    value: 'Paybyrd.Clients'
+  - name: projects
+    value: 'src/**/*.csproj'

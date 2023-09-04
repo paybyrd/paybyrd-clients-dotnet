@@ -5,6 +5,6 @@ namespace Paybyrd.Clients.Webhook.Contracts;
 
 internal class WebhookAttemptResponse : IWebhookAttemptResponse
 {
-    public HttpStatusCode StatusCode { get; init; }
-    public string? Content { get; init; }
+    public HttpStatusCode StatusCode { get; set; }
+    public string? Content { get; set; }
 }

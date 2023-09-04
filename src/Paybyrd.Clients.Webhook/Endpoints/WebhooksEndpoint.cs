@@ -1,5 +1,3 @@
-using System.Net.Http.Json;
-using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using Paybyrd.Clients.Webhook.Abstractions;
@@ -26,7 +24,7 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
         var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/settings/resend");
         request.Headers.Add("x-api-key", _authorization.ApiKey);
         
-        var content = new StringContent(JsonSerializer.Serialize(resendWebhook), Encoding.UTF8, MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(resendWebhook), Encoding.UTF8, "application/json");
         request.Content = content;
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
@@ -42,7 +40,8 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
-        var webhooks = await response.Content.ReadFromJsonAsync<Contracts.Webhook[]>(cancellationToken: cancellationToken);
+        var json = await response.Content.ReadAsStringAsync();
+        var webhooks = JsonSerializer.Deserialize<Contracts.Webhook[]>(json);
         return new WebhookCollection(webhooks!);
     }
 
@@ -55,7 +54,8 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
-        var attempts = await response.Content.ReadFromJsonAsync<Contracts.WebhookAttempt[]>(cancellationToken: cancellationToken);
+        var json = await response.Content.ReadAsStringAsync();
+        var attempts = JsonSerializer.Deserialize<WebhookAttempt[]>(json);
         return new WebhookAttemptCollection(attempts!);
     }
 }

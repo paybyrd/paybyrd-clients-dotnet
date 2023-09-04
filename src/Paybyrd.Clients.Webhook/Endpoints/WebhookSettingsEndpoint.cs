@@ -1,5 +1,3 @@
-using System.Net.Http.Json;
-using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using Paybyrd.Clients.Webhook.Abstractions;
@@ -27,16 +25,15 @@ internal class WebhookSettingsEndpoint : ISettingsEndpoint
         var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/settings");
         request.Headers.Add("x-api-key", _authorization.ApiKey);
         
-        var content = new StringContent(JsonSerializer.Serialize(createWebhookSettings), Encoding.UTF8, MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(createWebhookSettings), Encoding.UTF8, "application/json");
         request.Content = content;
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
-        var webhookSettings = await response.Content.ReadFromJsonAsync<WebhookSettings>(cancellationToken: cancellationToken);
-        
+        var json = await response.Content.ReadAsStringAsync();
+        var webhookSettings = JsonSerializer.Deserialize<WebhookSettings>(json);
         return webhookSettings!;
-
     }
     
     public async ValueTask<IWebhookSettingsCollection> QueryAsync(IQueryWebhookSettings queryWebhookSettings, CancellationToken cancellationToken = default)
@@ -47,7 +44,8 @@ internal class WebhookSettingsEndpoint : ISettingsEndpoint
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
-        var webhookSettings = await response.Content.ReadFromJsonAsync<WebhookSettings[]>(cancellationToken: cancellationToken);
+        var json = await response.Content.ReadAsStringAsync();
+        var webhookSettings = JsonSerializer.Deserialize<WebhookSettings[]>(json);
         return new WebhookSettingsCollection(webhookSettings!);
     }
 }

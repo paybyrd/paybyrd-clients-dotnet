@@ -4,11 +4,11 @@ namespace Paybyrd.Clients.Webhook.Contracts;
 
 internal class Webhook : IWebhook
 {
-    public string Id { get; init; } = string.Empty;
-    public string SettingsId { get; init; } = string.Empty;
-    public DateTime CreatedAt { get; init; }
-    public DateTime? SentAt { get; init; }
-    public string Event { get; init; } = string.Empty;
-    public string PaymentMethod { get; init; } = string.Empty;
-    public string[] ReferenceId { get; } = Array.Empty<string>();
+    public string Id { get; set; } = string.Empty;
+    public string SettingsId { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public DateTime? SentAt { get; set; }
+    public string Event { get; set; } = string.Empty;
+    public string PaymentMethod { get; set; } = string.Empty;
+    public string[] ReferenceId { get; set; } = Array.Empty<string>();
 }
