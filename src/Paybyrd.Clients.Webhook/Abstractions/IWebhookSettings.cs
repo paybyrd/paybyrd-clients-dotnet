@@ -7,5 +7,5 @@ public interface IWebhookSettings
     string Username { get; }
     string Password { get; }
     string[] Events { get; }
-    string[] Payments { get; }
+    string[] PaymentMethods { get; }
 }

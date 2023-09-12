@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using Paybyrd.Clients.Webhook.Abstractions;
 using Paybyrd.Clients.Webhook.Contracts;
@@ -40,22 +40,22 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadAsStringAsync();
-        var webhooks = JsonSerializer.Deserialize<Contracts.Webhook[]>(json);
-        return new WebhookCollection(webhooks!);
+        var json = await response.Content.ReadAsStringAsync(cancellationToken);
+        var dataResponse = JsonSerializer.Deserialize<WrappedResponse<Contracts.Webhook[]>>(json);
+        return new WebhookCollection(dataResponse!.Data);
     }
 
     public async ValueTask<IWebhookAttemptCollection> QueryAsync(IQueryWebhookAttempts queryWebhookAttempts,
         CancellationToken cancellationToken = default)
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, "api/v1/webhooks");
+        var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks/{queryWebhookAttempts.WebhookId}/attempts");
         request.Headers.Add("x-api-key", _authorization.ApiKey);
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadAsStringAsync();
-        var attempts = JsonSerializer.Deserialize<WebhookAttempt[]>(json);
-        return new WebhookAttemptCollection(attempts!);
+        var json = await response.Content.ReadAsStringAsync(cancellationToken);
+        var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookAttempt[]>>(json);
+        return new WebhookAttemptCollection(dataResponse!.Data);
     }
 }

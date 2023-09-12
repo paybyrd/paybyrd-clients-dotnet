@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using Paybyrd.Clients.Webhook.Abstractions;
 using Paybyrd.Clients.Webhook.Contracts;
@@ -32,8 +32,8 @@ internal class WebhookSettingsEndpoint : ISettingsEndpoint
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
         var json = await response.Content.ReadAsStringAsync();
-        var webhookSettings = JsonSerializer.Deserialize<WebhookSettings>(json);
-        return webhookSettings!;
+        var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookSettings>>(json);
+        return dataResponse!.Data;
     }
     
     public async ValueTask<IWebhookSettingsCollection> QueryAsync(IQueryWebhookSettings queryWebhookSettings, CancellationToken cancellationToken = default)
@@ -45,7 +45,7 @@ internal class WebhookSettingsEndpoint : ISettingsEndpoint
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
         var json = await response.Content.ReadAsStringAsync();
-        var webhookSettings = JsonSerializer.Deserialize<WebhookSettings[]>(json);
-        return new WebhookSettingsCollection(webhookSettings!);
+        var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookSettings[]>>(json);
+        return new WebhookSettingsCollection(dataResponse!.Data);
     }
 }

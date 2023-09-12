@@ -8,5 +8,5 @@ public interface IWebhook
     DateTime? SentAt { get; }
     string Event { get; }
     string PaymentMethod { get; }
-    string[] ReferenceId { get; }
+    string[] ReferenceIds { get; }
 }

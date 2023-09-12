@@ -1,9 +1,9 @@
-namespace Paybyrd.Clients.Webhook.Abstractions;
+﻿namespace Paybyrd.Clients.Webhook.Abstractions;
 
 public interface IWebhookAttempt
 {
     string Id { get; }
-    string AttemptId { get; }
+    string WebhookId { get; }
     DateTime CreatedAt { get; }
     string Event { get; }
     string PaymentMethod { get; }
