@@ -2,5 +2,6 @@
 
 public interface IAuthorization
 {
-    string ApiKey { get; }
+    string Key { get; }
+    string Value { get; }
 }

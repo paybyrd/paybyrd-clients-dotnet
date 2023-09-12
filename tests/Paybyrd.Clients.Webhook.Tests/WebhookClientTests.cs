@@ -6,15 +6,13 @@ using Paybyrd.Clients.Webhook.Tests.Fixtures;
 
 namespace Paybyrd.Clients.Webhook.Tests;
 
-public class WebhookClientTests : IClassFixture<ServiceProviderFixture>, IClassFixture<AuthorizationFixture>
+public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
 {
     private readonly ServiceProviderFixture _serviceProviderFixture;
-    private readonly AuthorizationFixture _authorizationFixture;
 
-    public WebhookClientTests(ServiceProviderFixture serviceProviderFixture, AuthorizationFixture authorizationFixture)
+    public WebhookClientTests(ServiceProviderFixture serviceProviderFixture)
     {
         _serviceProviderFixture = serviceProviderFixture ?? throw new ArgumentNullException(nameof(serviceProviderFixture));
-        _authorizationFixture = authorizationFixture ?? throw new ArgumentNullException(nameof(authorizationFixture));
     }
 
     [Fact]
@@ -23,7 +21,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>, IClassF
         await using var sp =_serviceProviderFixture.BuildServiceProvider();
         var client = sp.GetRequiredService<IWebhookClient>();
         var querySettings = Substitute.For<IQueryWebhookSettings>();
-        var settings = await client.Settings(_authorizationFixture.Authorization).QueryAsync(querySettings);
+        var settings = await client.WebhookSettings.QueryAsync(querySettings);
         settings.Should().NotBeEmpty();
     }
 
@@ -38,7 +36,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>, IClassF
         createWebhookSettings.Url.Returns("https://webapp-stub-api-v2-stg-ktzwiryfzguhy.azurewebsites.net/api/v1/hooks");
         createWebhookSettings.Username.Returns(Guid.NewGuid().ToString());
         createWebhookSettings.Password.Returns(Guid.NewGuid().ToString());
-        var settings = await client.Settings(_authorizationFixture.Authorization).CreateAsync(createWebhookSettings);
+        var settings = await client.WebhookSettings.CreateAsync(createWebhookSettings);
         settings.Should().NotBeNull();
 
         settings.Id.Should().NotBeNull();
@@ -55,7 +53,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>, IClassF
         await using var sp = _serviceProviderFixture.BuildServiceProvider();
         var client = sp.GetRequiredService<IWebhookClient>();
         var queryWebhooks = Substitute.For<IQueryWebhooks>();
-        var webhooks = await client.Webhooks(_authorizationFixture.Authorization).QueryAsync(queryWebhooks);
+        var webhooks = await client.Webhooks.QueryAsync(queryWebhooks);
         webhooks.Should().NotBeEmpty();
     }
 
@@ -66,7 +64,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>, IClassF
         var client = sp.GetRequiredService<IWebhookClient>();
         var queryWebhookAttempts = Substitute.For<IQueryWebhookAttempts>();
         queryWebhookAttempts.WebhookId.Returns("384f80b6-5339-4706-856b-57d95cbf2d20");
-        var webhookAttempts = await client.Webhooks(_authorizationFixture.Authorization).QueryAsync(queryWebhookAttempts);
+        var webhookAttempts = await client.Webhooks.QueryAsync(queryWebhookAttempts);
         webhookAttempts.Should().NotBeEmpty();
     }
 

@@ -6,25 +6,27 @@ using Paybyrd.Clients.Webhook.Utils;
 
 namespace Paybyrd.Clients.Webhook.Endpoints;
 
-internal class WebhookSettingsEndpoint : ISettingsEndpoint
+internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IAuthorization _authorization;
+    private readonly IAuthorizationHandler _authorizationHandler;
 
     public WebhookSettingsEndpoint(
         IHttpClientFactory httpClientFactory,
-        IAuthorization authorization)
+        IAuthorizationHandler authorizationHandler)
     {
         _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-        _authorization = authorization ?? throw new ArgumentNullException(nameof(authorization));
+        _authorizationHandler = authorizationHandler ?? throw new ArgumentNullException(nameof(authorizationHandler));
     }
 
     public async ValueTask<IWebhookSettings> CreateAsync(ICreateWebhookSettings createWebhookSettings,
         CancellationToken cancellationToken = default)
     {
+        var authorization = await _authorizationHandler.GetAuthorizationAsync(cancellationToken);
+
         var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/settings");
-        request.Headers.Add("x-api-key", _authorization.ApiKey);
-        
+        request.Headers.Add(authorization.Key, authorization.Value);
+
         var content = new StringContent(JsonSerializer.Serialize(createWebhookSettings), Encoding.UTF8, "application/json");
         request.Content = content;
 
@@ -38,8 +40,10 @@ internal class WebhookSettingsEndpoint : ISettingsEndpoint
     
     public async ValueTask<IWebhookSettingsCollection> QueryAsync(IQueryWebhookSettings queryWebhookSettings, CancellationToken cancellationToken = default)
     {
+        var authorization = await _authorizationHandler.GetAuthorizationAsync(cancellationToken);
+
         var request = new HttpRequestMessage(HttpMethod.Get, "api/v1/settings");
-        request.Headers.Add("x-api-key", _authorization.ApiKey);
+        request.Headers.Add(authorization.Key, authorization.Value);
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);

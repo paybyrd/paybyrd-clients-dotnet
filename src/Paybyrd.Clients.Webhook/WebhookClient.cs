@@ -5,20 +5,12 @@ namespace Paybyrd.Clients.Webhook;
 
 internal sealed class WebhookClient : IWebhookClient
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-
-    public WebhookClient(IHttpClientFactory httpClientFactory)
+    public WebhookClient(IWebhooksEndpoint webhooksEndpoint, IWebhookSettingsEndpoint webhookSettingsEndpoint)
     {
-        _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+        Webhooks = webhooksEndpoint ?? throw new ArgumentNullException(nameof(webhooksEndpoint));
+        WebhookSettings = webhookSettingsEndpoint ?? throw new ArgumentNullException(nameof(webhookSettingsEndpoint));
     }
 
-    public IWebhooksEndpoint Webhooks(IAuthorization authorization)
-    {
-        return new WebhooksEndpoint(_httpClientFactory, authorization);
-    }
-
-    public ISettingsEndpoint Settings(IAuthorization authorization)
-    {
-        return new WebhookSettingsEndpoint(_httpClientFactory, authorization);
-    }
+    public IWebhooksEndpoint Webhooks { get; }
+    public IWebhookSettingsEndpoint WebhookSettings { get; }
 }
