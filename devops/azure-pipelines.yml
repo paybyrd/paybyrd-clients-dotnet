@@ -36,7 +36,7 @@ stages:
   - template: versioning/prepare.yml@templates
     parameters:
       pool: ${{ parameters.pool }}
-  - template: webapp/csharp/linux/build.yml@templates
+  - template: library/csharp/linux/build.yml@templates
     parameters:
       pool: ${{ parameters.pool }}
       artifact_name: ${{ variables.artifact_name }}
@@ -45,3 +45,4 @@ stages:
     parameters:
       artifact_name: ${{ variables.artifact_name }}
       pool: ${{ parameters.pool }}
+      
