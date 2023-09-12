@@ -9,20 +9,20 @@ namespace Paybyrd.Clients.Webhook.Endpoints;
 internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IAuthorizationHandler _authorizationHandler;
+    private readonly IWebhookAuthorizationHandler _webhookAuthorizationHandler;
 
     public WebhookSettingsEndpoint(
         IHttpClientFactory httpClientFactory,
-        IAuthorizationHandler authorizationHandler)
+        IWebhookAuthorizationHandler webhookAuthorizationHandler)
     {
         _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-        _authorizationHandler = authorizationHandler ?? throw new ArgumentNullException(nameof(authorizationHandler));
+        _webhookAuthorizationHandler = webhookAuthorizationHandler ?? throw new ArgumentNullException(nameof(webhookAuthorizationHandler));
     }
 
     public async ValueTask<IWebhookSettings> CreateAsync(ICreateWebhookSettings createWebhookSettings,
         CancellationToken cancellationToken = default)
     {
-        var authorization = await _authorizationHandler.GetAuthorizationAsync(cancellationToken);
+        var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
 
         var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/settings");
         request.Headers.Add(authorization.Key, authorization.Value);
@@ -40,7 +40,7 @@ internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
     
     public async ValueTask<IWebhookSettingsCollection> QueryAsync(IQueryWebhookSettings queryWebhookSettings, CancellationToken cancellationToken = default)
     {
-        var authorization = await _authorizationHandler.GetAuthorizationAsync(cancellationToken);
+        var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
 
         var request = new HttpRequestMessage(HttpMethod.Get, "api/v1/settings");
         request.Headers.Add(authorization.Key, authorization.Value);

@@ -14,7 +14,7 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddWebhookClient<TAuthorizationHandler>(
         this IServiceCollection services,
         Action<WebhookApiOptions> optionsBuild)
-        where TAuthorizationHandler : class, IAuthorizationHandler
+        where TAuthorizationHandler : class, IWebhookAuthorizationHandler
     {
         services.Configure(optionsBuild);
         
@@ -30,7 +30,7 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<IWebhookClient, WebhookClient>();
         services.AddSingleton<IWebhooksEndpoint, WebhooksEndpoint>();
         services.AddSingleton<IWebhookSettingsEndpoint, WebhookSettingsEndpoint>();
-        services.AddSingleton<IAuthorizationHandler, TAuthorizationHandler>(); 
+        services.AddSingleton<IWebhookAuthorizationHandler, TAuthorizationHandler>(); 
             
         return services;
     }

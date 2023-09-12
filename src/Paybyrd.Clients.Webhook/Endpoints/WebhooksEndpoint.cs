@@ -9,19 +9,19 @@ namespace Paybyrd.Clients.Webhook.Endpoints;
 internal class WebhooksEndpoint : IWebhooksEndpoint
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IAuthorizationHandler _authorizationHandler;
+    private readonly IWebhookAuthorizationHandler _webhookAuthorizationHandler;
 
     public WebhooksEndpoint(
         IHttpClientFactory httpClientFactory,
-        IAuthorizationHandler authorizationHandler)
+        IWebhookAuthorizationHandler webhookAuthorizationHandler)
     {
         _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-        _authorizationHandler = authorizationHandler ?? throw new ArgumentNullException(nameof(authorizationHandler));
+        _webhookAuthorizationHandler = webhookAuthorizationHandler ?? throw new ArgumentNullException(nameof(webhookAuthorizationHandler));
     }
 
     public async ValueTask ResendAsync(IResendWebhooks resendWebhook, CancellationToken cancellationToken = default)
     {
-        var authorization = await _authorizationHandler.GetAuthorizationAsync(cancellationToken);
+        var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
 
         var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/settings/resend");
         request.Headers.Add(authorization.Key, authorization.Value);
@@ -36,7 +36,7 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
 
     public async ValueTask<IWebhookCollection> QueryAsync(IQueryWebhooks queryWebhooks, CancellationToken cancellationToken = default)
     {
-        var authorization = await _authorizationHandler.GetAuthorizationAsync(cancellationToken);
+        var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
 
         var request = new HttpRequestMessage(HttpMethod.Get, "api/v1/webhooks");
         request.Headers.Add(authorization.Key, authorization.Value);
@@ -52,7 +52,7 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
     public async ValueTask<IWebhookAttemptCollection> QueryAsync(IQueryWebhookAttempts queryWebhookAttempts,
         CancellationToken cancellationToken = default)
     {
-        var authorization = await _authorizationHandler.GetAuthorizationAsync(cancellationToken);
+        var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
 
         var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks/{queryWebhookAttempts.WebhookId}/attempts");
         request.Headers.Add(authorization.Key, authorization.Value);

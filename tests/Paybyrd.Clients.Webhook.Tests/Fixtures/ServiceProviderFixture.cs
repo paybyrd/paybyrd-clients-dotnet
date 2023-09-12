@@ -13,7 +13,7 @@ public class ServiceProviderFixture
     public ServiceProviderFixture()
     {
         _services = new ServiceCollection();
-        _services.AddWebhookClient<AuthorizationHandler>(options =>
+        _services.AddWebhookClient<WebhookAuthorizationHandler>(options =>
         {
             options.BaseUrl = Configuration.Self.GetValue<string>("Webhook:BaseUrl")!;
             options.Timeout = TimeSpan.FromSeconds(10);
@@ -25,15 +25,15 @@ public class ServiceProviderFixture
         return _services.BuildServiceProvider();
     }
 
-    class AuthorizationHandler : IAuthorizationHandler
+    class WebhookAuthorizationHandler : IWebhookAuthorizationHandler
     {
-        public ValueTask<IAuthorization> GetAuthorizationAsync(CancellationToken cancellationToken)
+        public ValueTask<IWebhookAuthorization> GetAuthorizationAsync(CancellationToken cancellationToken)
         {
-            return new ValueTask<IAuthorization>(new Authorization());
+            return new ValueTask<IWebhookAuthorization>(new WebhookAuthorization());
         }
     }
 
-    class Authorization : IAuthorization
+    class WebhookAuthorization : IWebhookAuthorization
     {
         public string Key { get; } = "x-api-key";
         public string Value { get; } = Configuration.Self.GetValue<string>("Webhook:ApiKey")!;

@@ -1,6 +1,6 @@
 ﻿namespace Paybyrd.Clients.Webhook.Abstractions;
 
-public interface IAuthorization
+public interface IWebhookAuthorization
 {
     string Key { get; }
     string Value { get; }
