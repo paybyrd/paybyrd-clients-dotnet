@@ -27,7 +27,7 @@ resources:
     - repository: templates
       type: git
       name: Gateway/paybyrd-deployment
-      ref: refs/tags/4.0.1
+      ref: refs/heads/hotfix/4.0.3
 
 variables:
   - template: 'variables.yml'
@@ -45,4 +45,5 @@ stages:
     parameters:
       artifact_name: ${{ variables.artifact_name }}
       pool: ${{ parameters.pool }}
+      feed: 'external'
       
