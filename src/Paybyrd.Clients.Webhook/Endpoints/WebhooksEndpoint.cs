@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Web;
 using Paybyrd.Clients.Webhook.Abstractions;
 using Paybyrd.Clients.Webhook.Contracts;
 using Paybyrd.Clients.Webhook.Utils;
@@ -38,15 +39,21 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
     {
         var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
 
-        var request = new HttpRequestMessage(HttpMethod.Get, "api/v1/webhooks");
+        var storeIds = string.Join(
+            '&',
+            queryWebhooks.StoreIds.Select(storeId => $"storeIds={storeId.ToString()}"));
+
+        var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks?referenceId={queryWebhooks.ReferenceId ?? string.Empty}&{storeIds}");
         request.Headers.Add(authorization.Key, authorization.Value);
+        request.Headers.Add("x-page", queryWebhooks.Page?.ToString());
+        request.Headers.Add("x-page-size", queryWebhooks.PageSize?.ToString());
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
         var json = await response.Content.ReadAsStringAsync(cancellationToken);
         var dataResponse = JsonSerializer.Deserialize<WrappedResponse<Contracts.Webhook[]>>(json);
-        return new WebhookCollection(dataResponse!.Data);
+        return new WebhookCollection(new PaginationInfo(response), dataResponse!.Data);
     }
 
     public async ValueTask<IWebhookAttemptCollection> QueryAsync(IQueryWebhookAttempts queryWebhookAttempts,
@@ -56,12 +63,14 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
 
         var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks/{queryWebhookAttempts.WebhookId}/attempts");
         request.Headers.Add(authorization.Key, authorization.Value);
+        request.Headers.Add("x-page", queryWebhookAttempts.Page?.ToString());
+        request.Headers.Add("x-page-size", queryWebhookAttempts.PageSize?.ToString());
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
         var json = await response.Content.ReadAsStringAsync(cancellationToken);
         var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookAttempt[]>>(json);
-        return new WebhookAttemptCollection(dataResponse!.Data);
+        return new WebhookAttemptCollection(new PaginationInfo(response), dataResponse!.Data);
     }
 }

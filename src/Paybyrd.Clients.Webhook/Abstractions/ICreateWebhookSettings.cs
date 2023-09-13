@@ -2,6 +2,7 @@
 
 public interface ICreateWebhookSettings
 {
+    long StoreId { get; }
     string Url { get; }
     string Username { get; }
     string Password { get; }

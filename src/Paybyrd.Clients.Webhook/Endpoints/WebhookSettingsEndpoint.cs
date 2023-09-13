@@ -41,8 +41,12 @@ internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
     public async ValueTask<IWebhookSettingsCollection> QueryAsync(IQueryWebhookSettings queryWebhookSettings, CancellationToken cancellationToken = default)
     {
         var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
+        
+        var storeIds = string.Join(
+            '&',
+            queryWebhookSettings.StoreIds.Select(storeId => $"storeIds={storeId.ToString()}"));
 
-        var request = new HttpRequestMessage(HttpMethod.Get, "api/v1/settings");
+        var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/settings?{storeIds}");
         request.Headers.Add(authorization.Key, authorization.Value);
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
