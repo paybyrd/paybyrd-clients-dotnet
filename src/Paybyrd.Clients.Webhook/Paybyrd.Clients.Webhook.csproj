@@ -6,6 +6,7 @@
     <LangVersion>latest</LangVersion>
     <IsPackable>true</IsPackable>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ProjectGuid>8E721140-6C9E-4C92-839B-E5332579C70F</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Paybyrd.Clients.Webhook</AssemblyTitle>
@@ -24,7 +25,7 @@
     <Description>Paybyrd webhook client implementation.</Description>
     <RepositoryType>GIT</RepositoryType>
     <PackageId>Paybyrd.Clients.Webhook</PackageId>
-    <UserSecretsId>B28E1F44-7D43-49F4-B44E-CD784770AC6C</UserSecretsId>
+    <UserSecretsId>A26C223C-F8EE-4937-BA22-C114007FD9F3</UserSecretsId>
     <PackageProjectUrl>https://github.com/paybyrd/paybyrd-clients-dotnet</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
