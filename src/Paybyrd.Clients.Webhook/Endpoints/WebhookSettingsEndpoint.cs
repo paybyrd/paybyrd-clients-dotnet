@@ -51,7 +51,7 @@ internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadAsStringAsync();
+        var json = await response.Content.ReadAsStringAsync(cancellationToken);
         var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookSettings[]>>(json);
         return new WebhookSettingsCollection(dataResponse!.Data);
     }

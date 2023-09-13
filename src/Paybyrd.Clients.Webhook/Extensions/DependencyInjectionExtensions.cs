@@ -27,10 +27,10 @@ public static class DependencyInjectionExtensions
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
             .AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, i => TimeSpan.FromSeconds(i)));
         
-        services.AddSingleton<IWebhookClient, WebhookClient>();
-        services.AddSingleton<IWebhooksEndpoint, WebhooksEndpoint>();
-        services.AddSingleton<IWebhookSettingsEndpoint, WebhookSettingsEndpoint>();
-        services.AddSingleton<IWebhookAuthorizationHandler, TAuthorizationHandler>(); 
+        services.AddScoped<IWebhookClient, WebhookClient>();
+        services.AddScoped<IWebhooksEndpoint, WebhooksEndpoint>();
+        services.AddScoped<IWebhookSettingsEndpoint, WebhookSettingsEndpoint>();
+        services.AddScoped<IWebhookAuthorizationHandler, TAuthorizationHandler>(); 
             
         return services;
     }

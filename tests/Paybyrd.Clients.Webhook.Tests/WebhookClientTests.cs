@@ -21,6 +21,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         await using var sp =_serviceProviderFixture.BuildServiceProvider();
         var client = sp.GetRequiredService<IWebhookClient>();
         var querySettings = Substitute.For<IQueryWebhookSettings>();
+        querySettings.StoreIds.Returns(Array.Empty<long>());
         var settings = await client.WebhookSettings.QueryAsync(querySettings);
         settings.Should().NotBeEmpty();
     }
