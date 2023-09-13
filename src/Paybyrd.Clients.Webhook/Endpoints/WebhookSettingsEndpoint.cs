@@ -33,7 +33,7 @@ internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadAsStringAsync();
+        var json = await response.Content.ReadAsStringAsync(cancellationToken);
         var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookSettings>>(json);
         return dataResponse!.Data;
     }
@@ -42,11 +42,10 @@ internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
     {
         var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
         
-        var storeIds = string.Join(
-            '&',
-            queryWebhookSettings.StoreIds.Select(storeId => $"storeIds={storeId.ToString()}"));
+        var queryParametersBuilder = new QueryParametersBuilder();
+        queryParametersBuilder.Add("storeIds", queryWebhookSettings.StoreIds.Select(x => x.ToString()).ToArray());
 
-        var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/settings?{storeIds}");
+        var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/settings{queryParametersBuilder.Build()}");
         request.Headers.Add(authorization.Key, authorization.Value);
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);

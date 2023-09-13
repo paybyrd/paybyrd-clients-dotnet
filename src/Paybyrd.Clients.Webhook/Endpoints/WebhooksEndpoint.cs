@@ -39,11 +39,11 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
     {
         var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
 
-        var storeIds = string.Join(
-            '&',
-            queryWebhooks.StoreIds.Select(storeId => $"storeIds={storeId.ToString()}"));
+        var queryParametersBuilder = new QueryParametersBuilder();
+        queryParametersBuilder.Add("referenceId", queryWebhooks.ReferenceId);
+        queryParametersBuilder.Add("storeIds", queryWebhooks.StoreIds.Select(x => x.ToString()).ToArray());
 
-        var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks?referenceId={queryWebhooks.ReferenceId ?? string.Empty}&{storeIds}");
+        var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks{queryParametersBuilder.Build()}");
         request.Headers.Add(authorization.Key, authorization.Value);
         request.Headers.Add("x-page", queryWebhooks.Page?.ToString());
         request.Headers.Add("x-page-size", queryWebhooks.PageSize?.ToString());
