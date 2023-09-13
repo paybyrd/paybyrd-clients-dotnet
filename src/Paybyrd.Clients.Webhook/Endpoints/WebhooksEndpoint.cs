@@ -39,9 +39,9 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
     {
         var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
 
-        var queryParametersBuilder = new QueryParametersBuilder();
-        queryParametersBuilder.Add("referenceId", queryWebhooks.ReferenceId);
-        queryParametersBuilder.Add("storeIds", queryWebhooks.StoreIds.Select(x => x.ToString()).ToArray());
+        var queryParametersBuilder = new QueryParametersBuilder()
+            .Add("referenceId", queryWebhooks.ReferenceId)
+            .Add("storeIds", queryWebhooks.StoreIds.Select(x => x.ToString()).ToArray());
 
         var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks{queryParametersBuilder.Build()}");
         request.Headers.Add(authorization.Key, authorization.Value);
