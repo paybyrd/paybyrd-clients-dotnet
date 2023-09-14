@@ -45,5 +45,5 @@ stages:
     parameters:
       artifact_name: ${{ variables.artifact_name }}
       pool: ${{ parameters.pool }}
-      feed: 'external'
+      feed: 'internal'
       
