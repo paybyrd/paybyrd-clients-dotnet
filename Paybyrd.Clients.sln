@@ -5,11 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0DE40FE1-D00E-4794-B322-016E1E132150}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paybyrd.Clients.Webhook", "src\Paybyrd.Clients.Webhook\Paybyrd.Clients.Webhook.csproj", "{B6C5B42B-2ED3-4F6C-8781-954F17E9B578}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3EFEA649-849F-48A1-9A7B-D7D8EF3150FB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paybyrd.Clients.Webhook.Tests", "tests\Paybyrd.Clients.Webhook.Tests\Paybyrd.Clients.Webhook.Tests.csproj", "{7B064116-91AD-4F3B-B3DC-73F58DFFACF5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{43C2E675-20E1-4C7C-9AE9-DCB16A93BC53}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,26 +13,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		devops\variables.yml = devops\variables.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paybyrd.Clients.Webhooks", "src\Paybyrd.Clients.Webhooks\Paybyrd.Clients.Webhooks.csproj", "{8E721140-6C9E-4C92-839B-E5332579C70F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paybyrd.Clients.Webhooks.Tests", "tests\Paybyrd.Clients.Webhooks.Tests\Paybyrd.Clients.Webhooks.Tests.csproj", "{B27E2B20-F105-40D2-8ED9-E382B599E55F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B6C5B42B-2ED3-4F6C-8781-954F17E9B578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6C5B42B-2ED3-4F6C-8781-954F17E9B578}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6C5B42B-2ED3-4F6C-8781-954F17E9B578}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6C5B42B-2ED3-4F6C-8781-954F17E9B578}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B064116-91AD-4F3B-B3DC-73F58DFFACF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B064116-91AD-4F3B-B3DC-73F58DFFACF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B064116-91AD-4F3B-B3DC-73F58DFFACF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B064116-91AD-4F3B-B3DC-73F58DFFACF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E721140-6C9E-4C92-839B-E5332579C70F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E721140-6C9E-4C92-839B-E5332579C70F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E721140-6C9E-4C92-839B-E5332579C70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E721140-6C9E-4C92-839B-E5332579C70F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B27E2B20-F105-40D2-8ED9-E382B599E55F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B27E2B20-F105-40D2-8ED9-E382B599E55F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B27E2B20-F105-40D2-8ED9-E382B599E55F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B27E2B20-F105-40D2-8ED9-E382B599E55F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B6C5B42B-2ED3-4F6C-8781-954F17E9B578} = {0DE40FE1-D00E-4794-B322-016E1E132150}
-		{7B064116-91AD-4F3B-B3DC-73F58DFFACF5} = {3EFEA649-849F-48A1-9A7B-D7D8EF3150FB}
+		{8E721140-6C9E-4C92-839B-E5332579C70F} = {0DE40FE1-D00E-4794-B322-016E1E132150}
+		{B27E2B20-F105-40D2-8ED9-E382B599E55F} = {3EFEA649-849F-48A1-9A7B-D7D8EF3150FB}
 	EndGlobalSection
 EndGlobal
