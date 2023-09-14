@@ -21,7 +21,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Description>Paybyrd webhook client implementation.</Description>
     <RepositoryType>GIT</RepositoryType>
-    <PackageId>Paybyrd.Clients.Webhook</PackageId>
+    <PackageId>Paybyrd.Clients.Dotnet.Webhook</PackageId>
     <UserSecretsId>A26C223C-F8EE-4937-BA22-C114007FD9F3</UserSecretsId>
     <PackageProjectUrl>https://github.com/paybyrd/paybyrd-clients-dotnet</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
