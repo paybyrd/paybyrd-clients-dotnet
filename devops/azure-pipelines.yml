@@ -41,6 +41,7 @@ stages:
       pool: ${{ parameters.pool }}
       artifact_name: ${{ variables.artifact_name }}
       projects: ${{ variables.projects }}
+      run_tests: false
   - template: nuget/linux/deploy.yml@templates
     parameters:
       artifact_name: ${{ variables.artifact_name }}
