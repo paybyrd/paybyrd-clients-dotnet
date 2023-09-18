@@ -3,40 +3,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0DE40FE1-D00E-4794-B322-016E1E132150}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3EFEA649-849F-48A1-9A7B-D7D8EF3150FB}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{43C2E675-20E1-4C7C-9AE9-DCB16A93BC53}"
-	ProjectSection(SolutionItems) = preProject
-		devops\azure-pipelines.yml = devops\azure-pipelines.yml
-		devops\variables.yml = devops\variables.yml
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{081AF326-FA1D-4AE3-860B-3DACDD325851}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paybyrd.Clients.Webhook", "src\Paybyrd.Clients.Webhook\Paybyrd.Clients.Webhook.csproj", "{8E721140-6C9E-4C92-839B-E5332579C70F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paybyrd.Clients.Webhook.Tests", "tests\Paybyrd.Clients.Webhook.Tests\Paybyrd.Clients.Webhook.Tests.csproj", "{8C9F1850-90A9-4E5C-95BC-3B101DE98741}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1A3BEE13-C0D8-4EBE-9F9B-51DABD4B84D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paybyrd.Clients.Webhook.Tests", "tests\Paybyrd.Clients.Webhook.Tests\Paybyrd.Clients.Webhook.Tests.csproj", "{95773378-B59A-4F76-A261-78236FD479BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8E721140-6C9E-4C92-839B-E5332579C70F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E721140-6C9E-4C92-839B-E5332579C70F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E721140-6C9E-4C92-839B-E5332579C70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E721140-6C9E-4C92-839B-E5332579C70F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C9F1850-90A9-4E5C-95BC-3B101DE98741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C9F1850-90A9-4E5C-95BC-3B101DE98741}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C9F1850-90A9-4E5C-95BC-3B101DE98741}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C9F1850-90A9-4E5C-95BC-3B101DE98741}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		{95773378-B59A-4F76-A261-78236FD479BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95773378-B59A-4F76-A261-78236FD479BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95773378-B59A-4F76-A261-78236FD479BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95773378-B59A-4F76-A261-78236FD479BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8E721140-6C9E-4C92-839B-E5332579C70F} = {0DE40FE1-D00E-4794-B322-016E1E132150}
-		{8C9F1850-90A9-4E5C-95BC-3B101DE98741} = {3EFEA649-849F-48A1-9A7B-D7D8EF3150FB}
+		{8E721140-6C9E-4C92-839B-E5332579C70F} = {081AF326-FA1D-4AE3-860B-3DACDD325851}
+		{95773378-B59A-4F76-A261-78236FD479BD} = {1A3BEE13-C0D8-4EBE-9F9B-51DABD4B84D0}
 	EndGlobalSection
 EndGlobal
