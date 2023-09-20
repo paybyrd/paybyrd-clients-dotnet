@@ -1,3 +1,5 @@
+using Paybyrd.Clients.Webhook.ValueObjects;
+
 namespace Paybyrd.Clients.Webhook.Abstractions;
 
 public interface IWebhookSettings
@@ -6,6 +8,6 @@ public interface IWebhookSettings
     string Url { get; }
     string Username { get; }
     string Password { get; }
-    string[] Events { get; }
-    string[] PaymentMethods { get; }
+    Event[] Events { get; }
+    PaymentMethod[] PaymentMethods { get; }
 }

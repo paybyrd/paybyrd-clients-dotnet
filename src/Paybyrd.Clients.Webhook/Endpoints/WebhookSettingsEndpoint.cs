@@ -37,11 +37,23 @@ internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
         var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookSettings>>(json);
         return dataResponse!.Data;
     }
-    
+
+    public async ValueTask DeleteAsync(IDeleteWebhookSettings deleteWebhookSettings, CancellationToken cancellationToken = default)
+    {
+        var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
+
+        var request = new HttpRequestMessage(HttpMethod.Delete, $"api/v1/settings/{deleteWebhookSettings.SettingsId}");
+        request.Headers.Add(authorization.Key, authorization.Value);
+
+        using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
+        var response = await client.SendAsync(request, cancellationToken);
+        response.EnsureSuccessStatusCode();
+    }
+
     public async ValueTask<IWebhookSettingsCollection> QueryAsync(IQueryWebhookSettings queryWebhookSettings, CancellationToken cancellationToken = default)
     {
         var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
-        
+
         var queryParametersBuilder = new QueryParametersBuilder();
         queryParametersBuilder.Add("storeIds", queryWebhookSettings.StoreIds.Select(x => x.ToString()).ToArray());
 

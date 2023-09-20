@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Paybyrd.Clients.Webhook.Abstractions;
 using Paybyrd.Clients.Webhook.Tests.Fixtures;
+using Paybyrd.Clients.Webhook.ValueObjects;
 
 namespace Paybyrd.Clients.Webhook.Tests;
 
@@ -32,8 +33,8 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         await using var sp = _serviceProviderFixture.BuildServiceProvider();
         var client = sp.GetRequiredService<IWebhookClient>();
         var createWebhookSettings = Substitute.For<ICreateWebhookSettings>();
-        createWebhookSettings.Events.Returns(new[] { "order.paid" });
-        createWebhookSettings.PaymentMethods.Returns(new[] { "card" });
+        createWebhookSettings.Events.Returns(new[] { Event.OrderPaid });
+        createWebhookSettings.PaymentMethods.Returns(new[] { PaymentMethod.Card });
         createWebhookSettings.Url.Returns("https://webapp-stub-api-v2-stg-ktzwiryfzguhy.azurewebsites.net/api/v1/hooks");
         createWebhookSettings.Username.Returns(Guid.NewGuid().ToString());
         createWebhookSettings.Password.Returns(Guid.NewGuid().ToString());

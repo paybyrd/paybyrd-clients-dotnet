@@ -7,7 +7,13 @@ namespace Paybyrd.Clients.Webhook.Abstractions;
 
 public interface IWebhookAttemptResponse
 {
+    /// <summary>
+    /// The status code response of the webhook attempt.
+    /// </summary>
     HttpStatusCode StatusCode { get; }
+    /// <summary>
+    /// The content response of the webhook attempt.
+    /// </summary>
     string? Content { get; }
 
     internal class Converter : JsonConverter<IWebhookAttemptResponse>
