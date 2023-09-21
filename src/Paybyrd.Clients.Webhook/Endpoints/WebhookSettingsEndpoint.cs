@@ -67,4 +67,19 @@ internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
         var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookSettings[]>>(json);
         return new WebhookSettingsCollection(dataResponse!.Data);
     }
+
+    public async ValueTask<IWebhookSettings> QueryByIdAsync(IQueryWebhookSettingsById queryWebhookSettingsById, CancellationToken cancellationToken = default)
+    {
+        var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
+
+        var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/settings/{queryWebhookSettingsById.SettingsId}");
+        request.Headers.Add(authorization.Key, authorization.Value);
+
+        using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
+        var response = await client.SendAsync(request, cancellationToken);
+        response.EnsureSuccessStatusCode();
+        var json = await response.Content.ReadAsStringAsync(cancellationToken);
+        var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookSettings>>(json);
+        return dataResponse!.Data;
+    }
 }
