@@ -14,7 +14,7 @@ internal class CreateWebhookSettingsRequest : ICreateWebhookSettings
     }
 
     [JsonPropertyName("apiKey")]
-    public string ApiKey => _createWebhookSettings.ApiKey;
+    public string? ApiKey => _createWebhookSettings.ApiKey;
 
     [JsonPropertyName("credentialType")]
     [JsonConverter(typeof(CredentialType.Converter))]

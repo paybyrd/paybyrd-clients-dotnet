@@ -13,7 +13,7 @@ public interface ICreateWebhookSettings
     /// <remarks>
     ///     If not provided and <see cref="CredentialType" /> is <c>api-key</c>, it will be generated.
     /// </remarks>
-    string ApiKey { get; }
+    string? ApiKey { get; }
 
     /// <summary>
     ///     The authorization type to use.
