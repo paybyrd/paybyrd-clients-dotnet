@@ -19,7 +19,7 @@ public readonly record struct CredentialType
 
     public string Value { get; }
 
-    private static CredentialType Create(string value)
+    public static CredentialType Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
