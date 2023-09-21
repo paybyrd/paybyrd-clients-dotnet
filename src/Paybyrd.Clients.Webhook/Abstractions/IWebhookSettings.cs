@@ -4,10 +4,9 @@ namespace Paybyrd.Clients.Webhook.Abstractions;
 
 public interface IWebhookSettings
 {
-    string Id { get; }
-    string Url { get; }
-    string Username { get; }
-    string Password { get; }
+    IWebhookCredential Credential { get; }
     Event[] Events { get; }
+    string Id { get; }
     PaymentMethod[] PaymentMethods { get; }
+    string Url { get; }
 }

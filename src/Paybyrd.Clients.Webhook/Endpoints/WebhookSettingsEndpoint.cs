@@ -27,7 +27,7 @@ internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
         var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/settings");
         request.Headers.Add(authorization.Key, authorization.Value);
 
-        var content = new StringContent(JsonSerializer.Serialize(createWebhookSettings), Encoding.UTF8, "application/json");
+        var content = new StringContent(JsonSerializer.Serialize(new CreateWebhookSettingsRequest(createWebhookSettings)), Encoding.UTF8, "application/json");
         request.Content = content;
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
