@@ -10,6 +10,12 @@ public sealed class WebhookApiOptionsBuilder
         _baseUrl = "https://webhook.paybyrd.com";
     }
 
+    public WebhookApiOptionsBuilder WithBaseUrl(string url)
+    {
+        _baseUrl = url;
+        return this;
+    }
+
     public WebhookApiOptionsBuilder WithProductionBaseUrl()
     {
         _baseUrl = "https://webhook.paybyrd.com";
