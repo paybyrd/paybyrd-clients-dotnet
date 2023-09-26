@@ -6,21 +6,21 @@ internal class PaginationInfo : IPaginationInfo
 {
     public PaginationInfo(HttpResponseMessage responseMessage)
     {
-        CurrentPage = GetLongValue(responseMessage, "x-current-page");
-        PageSize = GetLongValue(responseMessage, "x-page-size");
-        TotalPages = GetLongValue(responseMessage, "x-page-count");
-        TotalItems = GetLongValue(responseMessage, "x-total-items");
+        CurrentPage = GetIntValue(responseMessage, "x-current-page");
+        PageSize = GetIntValue(responseMessage, "x-page-size");
+        TotalPages = GetIntValue(responseMessage, "x-page-count");
+        TotalItems = GetIntValue(responseMessage, "x-total-item-count");
     }
 
-    public long CurrentPage { get; }
-    public long PageSize { get; }
-    public long TotalPages { get; }
-    public long TotalItems { get; }
-    
-    private static long GetLongValue(HttpResponseMessage responseMessage, string key)
+    public int CurrentPage { get; }
+    public int PageSize { get; }
+    public int TotalItems { get; }
+    public int TotalPages { get; }
+
+    private static int GetIntValue(HttpResponseMessage responseMessage, string key)
     {
         if (responseMessage.Headers.TryGetValues(key, out var values)
-            && long.TryParse(values.FirstOrDefault(), out var value))
+            && int.TryParse(values.FirstOrDefault(), out var value))
         {
             return value;
         }

@@ -11,8 +11,8 @@ internal class WebhookAttemptCollection : List<IWebhookAttempt>, IWebhookAttempt
         _paginationInfo = paginationInfo ?? throw new ArgumentNullException(nameof(paginationInfo));
     }
 
-    public long CurrentPage => _paginationInfo.CurrentPage;
-    public long PageSize => _paginationInfo.PageSize;
-    public long TotalPages => _paginationInfo.TotalPages;
-    public long TotalItems => _paginationInfo.TotalItems;
+    public int CurrentPage => _paginationInfo.CurrentPage;
+    public int PageSize => _paginationInfo.PageSize;
+    public int TotalItems => _paginationInfo.TotalItems;
+    public int TotalPages => _paginationInfo.TotalPages;
 }
