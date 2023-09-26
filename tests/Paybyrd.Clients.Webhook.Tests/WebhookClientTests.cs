@@ -102,7 +102,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         await using var sp = _serviceProviderFixture.BuildServiceProvider();
         var client = sp.GetRequiredService<IWebhookClient>();
         var queryWebhookAttempts = Substitute.For<IQueryWebhookAttempts>();
-        queryWebhookAttempts.WebhookId.Returns("384f80b6-5339-4706-856b-57d95cbf2d20");
+        queryWebhookAttempts.WebhookId.Returns("df49bf90-e9d3-4578-8cb2-7c66f84e95a9");
         var webhookAttempts = await client.Webhooks.QueryAsync(queryWebhookAttempts);
         webhookAttempts.Should().NotBeEmpty();
     }
