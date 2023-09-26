@@ -1,4 +1,6 @@
-﻿namespace Paybyrd.Clients.Webhook.Abstractions;
+﻿using Paybyrd.Clients.Webhook.ValueObjects;
+
+namespace Paybyrd.Clients.Webhook.Abstractions;
 
 public interface IWebhookAttempt
 {
@@ -15,7 +17,7 @@ public interface IWebhookAttempt
     /// <summary>
     ///     The event that triggered the webhook.
     /// </summary>
-    string Event { get; }
+    Event Event { get; }
 
     /// <summary>
     ///     The ID of the webhook attempt.
@@ -25,7 +27,7 @@ public interface IWebhookAttempt
     /// <summary>
     ///     The payment method that triggered the webhook.
     /// </summary>
-    string PaymentMethod { get; }
+    PaymentMethod PaymentMethod { get; }
 
     /// <summary>
     ///     The response of the webhook attempt.

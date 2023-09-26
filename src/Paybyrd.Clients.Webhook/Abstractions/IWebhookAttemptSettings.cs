@@ -7,19 +7,14 @@ namespace Paybyrd.Clients.Webhook.Abstractions;
 public interface IWebhookAttemptSettings
 {
     /// <summary>
-    ///     The password used to authenticate the webhook attempt.
+    ///     The credential used to authenticate the webhook attempt.
     /// </summary>
-    string Password { get; }
+    IWebhookCredential Credential { get; }
 
     /// <summary>
     ///     The URL to send the webhook attempt to.
     /// </summary>
     string Url { get; }
-
-    /// <summary>
-    ///     The username used to authenticate the webhook attempt.
-    /// </summary>
-    string Username { get; }
 
     internal class Converter : JsonConverter<IWebhookAttemptSettings>
     {

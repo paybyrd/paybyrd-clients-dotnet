@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Paybyrd.Clients.Webhook.Abstractions;
+using Paybyrd.Clients.Webhook.ValueObjects;
 
 namespace Paybyrd.Clients.Webhook.Contracts;
 
@@ -12,13 +13,15 @@ internal class WebhookAttempt : IWebhookAttempt
     public DateTime CreatedAt { get; set; }
 
     [JsonPropertyName("event")]
-    public string Event { get; set; } = string.Empty;
+    [JsonConverter(typeof(Event.Converter))]
+    public Event Event { get; set; }
 
     [JsonPropertyName("id")]
     public string Id { get; set; } = string.Empty;
 
     [JsonPropertyName("paymentMethod")]
-    public string PaymentMethod { get; set; } = string.Empty;
+    [JsonConverter(typeof(PaymentMethod.Converter))]
+    public PaymentMethod PaymentMethod { get; set; }
 
     [JsonPropertyName("response")]
     [JsonConverter(typeof(IWebhookAttemptResponse.Converter))]

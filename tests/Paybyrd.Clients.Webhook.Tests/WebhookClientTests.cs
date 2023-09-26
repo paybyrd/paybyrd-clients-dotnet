@@ -96,7 +96,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         settings.Should().NotBeEmpty();
     }
 
-    [Fact(Skip = "This test requires a webhook to be sent in the test environment.")]
+    [Fact(Skip = "This test requires a valid webhook id.")]
     public async Task GivenWebhookClient_WhenQueryWebhookAttempts_ShouldReturnAList()
     {
         await using var sp = _serviceProviderFixture.BuildServiceProvider();

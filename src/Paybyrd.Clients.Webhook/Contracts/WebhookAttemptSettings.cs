@@ -5,10 +5,10 @@ namespace Paybyrd.Clients.Webhook.Contracts;
 
 internal class WebhookAttemptSettings : IWebhookAttemptSettings
 {
-    [JsonPropertyName("username")]
-    public string Username { get; set; } = string.Empty;
-    [JsonPropertyName("password")]
-    public string Password { get; set; } = string.Empty;
+    [JsonPropertyName("credential")]
+    [JsonConverter(typeof(IWebhookCredential.Converter))]
+    public IWebhookCredential Credential { get; set; } = null!;
+
     [JsonPropertyName("url")]
     public string Url { get; set; } = string.Empty;
 }
