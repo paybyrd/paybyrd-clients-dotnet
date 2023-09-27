@@ -59,7 +59,7 @@ public interface IWebhookSettingsEndpoint
     /// <returns>
     ///     The settings.
     /// </returns>
-    ValueTask<IWebhookSettings> QueryByIdAsync(
+    ValueTask<IWebhookSettings> QueryAsync(
         IQueryWebhookSettingsById queryWebhookSettingsById,
         CancellationToken cancellationToken = default);
 }

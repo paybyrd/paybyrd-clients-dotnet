@@ -68,7 +68,7 @@ internal class WebhookSettingsEndpoint : IWebhookSettingsEndpoint
         return new WebhookSettingsCollection(dataResponse!.Data);
     }
 
-    public async ValueTask<IWebhookSettings> QueryByIdAsync(IQueryWebhookSettingsById queryWebhookSettingsById, CancellationToken cancellationToken = default)
+    public async ValueTask<IWebhookSettings> QueryAsync(IQueryWebhookSettingsById queryWebhookSettingsById, CancellationToken cancellationToken = default)
     {
         var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
 
