@@ -1,21 +1,20 @@
 # Paybyrd.Clients
 
-Projeto de clients criados especificamente para consumir APIs RESTful públicas da Paybyrd.
+Client projects created specifically to consume Paybyrd's public RESTful APIs.
 
 ## Paybyrd.Clients.Webhook
 
-Client para consumir a API de Webhooks da Paybyrd.
+Client for consuming Paybyrd's Webhooks API.
 
-### Instalação
+### Installation
 
 ```bash
 dotnet add package Paybyrd.Clients.Webhook
 ```
 
-### Como configurar
+### How to Configure
 
-Dentro do método `ConfigureServices` da sua aplicação, ou `Program.cs`, caso esteja utilizando as novas versões do .Net,
-adicione o seguinte código:
+Inside the `ConfigureServices` method of your application, or in `Program.cs` if you are using the newer versions of .NET, add the following code:
 
 ```csharp
 using Paybyrd.Clients.Webhook;
@@ -31,21 +30,21 @@ builder.Services.AddWebhookClient<WebhookAuthorizationHandler>(builder =>
 });
 ```
 
-Para criar a classe de autenticação, basta implementar a interface `IWebhookAuthorizationHandler`, segue um exemplo abaixo:
-    
+To create the authentication class, simply implement the `IWebhookAuthorizationHandler` interface, as shown in the example below:
+
 ```csharp
 public class WebhookAuthorizationHandler : IWebhookAuthorizationHandler
 {
     public async ValueTask<IWebhookAuthorization> GetAuthorizationAsync(CancellationToken cancellationToken)
     {
-        // Aqui você pode fazer uma autenticação Machine to machine ou utilizar a API Key da Paybyrd.
+        // Here you can perform machine-to-machine authentication or use Paybyrd's API Key.
     }
 }
 ```
 
-### Como utilizar
+### How to Use
 
-Para utilizar o client, basta injetar a interface `IWebhookClient` no construtor da sua classe e utilizar os métodos disponíveis.
+To use the client, simply inject the `IWebhookClient` interface into your class constructor and use the available methods.
 
 ```csharp
 using Paybyrd.Clients.Webhook;
@@ -59,71 +58,71 @@ public class WebhookExternalService
         _webhookClient = webhookClient ?? throw new ArgumentNullException(nameof(webhookClient));
     }
     
-    // Implemente a chamada dos métodos que deseja utilizar.
+    // Implement the calls to the methods you want to use.
 }
 ```
 
-### Métodos disponíveis
+### Available Methods
 
-#### Resend webhooks
+#### Resend Webhooks
 
-Permite reenviar uma lista de webhooks.
+Allows you to resend a list of webhooks.
 
 ```csharp
-IResendWebhooks resendWebhooks = // Implemente uma classe que implemente `IResendWebhooks`.
+IResendWebhooks resendWebhooks = // Implement a class that implements `IResendWebhooks`.
 await _webhookClient.Webhooks.ResendAsync(resendWebhooks, cancellationToken);
 ```
 
-#### Query webhooks
+#### Query Webhooks
 
-Permite consultar uma lista de webhooks com alguns filtros disponíveis.
+Allows you to query a list of webhooks with various available filters.
 
 ```csharp
-IQueryWebhooks queryWebhooks = // Implemente uma classe de filtro que implement `IQueryWebhooks`.
+IQueryWebhooks queryWebhooks = // Implement a filter class that implements `IQueryWebhooks`.
 IWebhookCollection webhooks = await _webhookClient.Webhooks.QueryAsync(queryWebhooks, cancellationToken);
 ```
 
-#### Query webhook attempts
+#### Query Webhook Attempts
 
-Permite consultar uma lista de tentativas de envio para um webhook.
+Allows you to query a list of send attempts for a webhook.
 
 ```csharp
-IQueryWebhookAttempts queryWebhookAttempts = // Implemente uma classe de filtro que implement `IQueryWebhookAttempts`.
+IQueryWebhookAttempts queryWebhookAttempts = // Implement a filter class that implements `IQueryWebhookAttempts`.
 IWebhookAttemptCollection webhookAttempts = await _webhookClient.Webhooks.QueryAsync(queryAttempts, cancellationToken);
 ```
 
-#### Create webhook settings
+#### Create Webhook Settings
 
-Permite criar uma configuração de webhook.
+Allows you to create webhook settings.
 
 ```csharp
-ICreateWebhookSettings = // Implemente uma classe que implemente `ICreateWebhookSettings`.
+ICreateWebhookSettings createWebhookSettings = // Implement a class that implements `ICreateWebhookSettings`.
 IWebhookSettings settings = await _webhookClient.WebhookSettings.CreateAsync(createWebhookSettings, cancellationToken);
 ```
 
-#### Delete webhook settings
+#### Delete Webhook Settings
 
-Permite deletar uma configuração de webhook.
+Allows you to delete webhook settings.
 
 ```csharp
-IDeleteWebhookSettings deleteWebhookSettings = // Implemente uma classe que implemente `IDeleteWebhookSettings`.
+IDeleteWebhookSettings deleteWebhookSettings = // Implement a class that implements `IDeleteWebhookSettings`.
 await _webhookClient.WebhookSettings.DeleteAsync(deleteWebhookSettings, cancellationToken);
 ```
 
-#### Query webhook settings
+#### Query Webhook Settings
 
-Permite consultar uma lista de configurações de webhook.
+Allows you to query a list of webhook settings.
 
 ```csharp
-IQueryWebhookSettings queryWebhookSettings = // Implemente uma classe de filtro que implemente `IQueryWebhookSettings`.
+IQueryWebhookSettings queryWebhookSettings = // Implement a filter class that implements `IQueryWebhookSettings`.
 IWebhookSettingsCollection webhookSettings = await _webhookClient.WebhookSettings.DeleteAsync(queryWebhookSettings, cancellationToken);
 ```
 
-#### Query a webhook settings by id
+#### Query Webhook Settings by ID
 
-Permite consultar uma configuração de webhook pelo seu id.
+Allows you to query webhook settings by their ID.
 
 ```csharp
-IQueryWebhookSettingsById queryWebhookSettingsById = // Implemente uma classe de filtro que implemente `IQueryWebhookSettingsById`.
+IQueryWebhookSettingsById queryWebhookSettingsById = // Implement a filter class that implements `IQueryWebhookSettingsById`.
 IWebhookSettings webhookSettings = await _webhookClient.WebhookSettings.QueryAsync(queryWebhookSettingsById, cancellationToken);
 ```
