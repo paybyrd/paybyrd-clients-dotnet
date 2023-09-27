@@ -33,7 +33,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         settings.Id.Should().NotBeNull();
         settings.Url.Should().Be(createWebhookSettings.Url);
         settings.Credential.Should().NotBeNull();
-        settings.Credential.Type.Should().Be(CredentialType.ApiKey);
+        settings.Credential.Type.Should().Be(CredentialType.ApiKey.Value);
         settings.Credential.ApiKey.Should().Be(createWebhookSettings.ApiKey);
         settings.Events.Should().BeEquivalentTo(createWebhookSettings.Events);
         settings.PaymentMethods.Should().BeEquivalentTo(createWebhookSettings.PaymentMethods);
@@ -56,7 +56,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         settings.Id.Should().NotBeNull();
         settings.Url.Should().Be(createWebhookSettings.Url);
         settings.Credential.Should().NotBeNull();
-        settings.Credential.Type.Should().Be(CredentialType.Basic);
+        settings.Credential.Type.Should().Be(CredentialType.Basic.Value);
         settings.Credential.Username.Should().Be(createWebhookSettings.Username);
         settings.Credential.Password.Should().Be(createWebhookSettings.Password);
         settings.Events.Should().BeEquivalentTo(createWebhookSettings.Events);

@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Paybyrd.Clients.Webhook.Contracts;
-using Paybyrd.Clients.Webhook.ValueObjects;
 
 namespace Paybyrd.Clients.Webhook.Abstractions;
 
@@ -9,7 +8,7 @@ public interface IWebhookCredential
 {
     string? ApiKey { get; }
     string? Password { get; }
-    CredentialType Type { get; }
+    string Type { get; }
     string? Username { get; }
 
     internal class Converter : JsonConverter<IWebhookCredential>
