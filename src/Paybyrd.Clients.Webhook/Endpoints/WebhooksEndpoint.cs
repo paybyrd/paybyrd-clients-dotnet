@@ -19,21 +19,6 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
         _webhookAuthorizationHandler = webhookAuthorizationHandler ?? throw new ArgumentNullException(nameof(webhookAuthorizationHandler));
     }
 
-    public async ValueTask ResendAsync(IResendWebhooks resendWebhook, CancellationToken cancellationToken = default)
-    {
-        var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
-
-        var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/settings/resend");
-        request.Headers.Add(authorization.Key, authorization.Value);
-        
-        var content = new StringContent(JsonSerializer.Serialize(resendWebhook), Encoding.UTF8, "application/json");
-        request.Content = content;
-
-        using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
-        var response = await client.SendAsync(request, cancellationToken);
-        response.EnsureSuccessStatusCode();
-    }
-
     public async ValueTask<IWebhookCollection> QueryAsync(IQueryWebhooks queryWebhooks, CancellationToken cancellationToken = default)
     {
         var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
@@ -71,5 +56,20 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
         var json = await response.Content.ReadAsStringAsync(cancellationToken);
         var dataResponse = JsonSerializer.Deserialize<WrappedResponse<WebhookAttempt[]>>(json);
         return new WebhookAttemptCollection(new PaginationInfo(response), dataResponse!.Data);
+    }
+
+    public async ValueTask ResendAsync(IResendWebhooks resendWebhook, CancellationToken cancellationToken = default)
+    {
+        var authorization = await _webhookAuthorizationHandler.GetAuthorizationAsync(cancellationToken);
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/webhooks/resend");
+        request.Headers.Add(authorization.Key, authorization.Value);
+
+        var content = new StringContent(JsonSerializer.Serialize(resendWebhook), Encoding.UTF8, "application/json");
+        request.Content = content;
+
+        using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
+        var response = await client.SendAsync(request, cancellationToken);
+        response.EnsureSuccessStatusCode();
     }
 }
