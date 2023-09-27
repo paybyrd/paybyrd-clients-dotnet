@@ -16,16 +16,21 @@ public static class DependencyInjectionExtensions
     {
         var builder = new WebhookApiOptionsBuilder();
         optionsBuild.Invoke(builder);
-        services.Configure<WebhookApiOptions>(options => options.Update(builder.Build()));
+        var options = builder.Build();
+        services.Configure<WebhookApiOptions>(opt => opt.Update(options));
 
-        services.AddHttpClient(Constants.HTTP_CLIENT_KEY, (sp, client) =>
+        var httpClientBuilder = services.AddHttpClient(Constants.HTTP_CLIENT_KEY, client =>
             {
-                var options = builder.Build();
                 client.BaseAddress = new Uri(options.BaseUrl);
                 client.Timeout = options.Timeout;
             })
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
             .AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, i => TimeSpan.FromSeconds(i)));
+
+        if (options.HttpHandlerType is not null)
+        {
+            httpClientBuilder.AddHttpMessageHandler(sp => (DelegatingHandler)sp.GetRequiredService(options.HttpHandlerType));
+        }
 
         services.AddScoped<IWebhookClient, WebhookClient>();
         services.AddScoped<IWebhooksEndpoint, WebhooksEndpoint>();

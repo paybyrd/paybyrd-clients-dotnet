@@ -3,16 +3,25 @@ namespace Paybyrd.Clients.Webhook.Options;
 public sealed class WebhookApiOptionsBuilder
 {
     private string _baseUrl;
+    private Type? _httpHandlerType;
     private TimeSpan _timeout;
 
     internal WebhookApiOptionsBuilder()
     {
         _baseUrl = "https://webhook.paybyrd.com";
+        _httpHandlerType = null;
     }
 
     public WebhookApiOptionsBuilder WithBaseUrl(string url)
     {
         _baseUrl = url;
+        return this;
+    }
+
+    public WebhookApiOptionsBuilder WithHttpHandler<THandler>()
+        where THandler : DelegatingHandler
+    {
+        _httpHandlerType = typeof(THandler);
         return this;
     }
 
@@ -39,7 +48,8 @@ public sealed class WebhookApiOptionsBuilder
         return new WebhookApiOptions
         {
             BaseUrl = _baseUrl,
-            Timeout = _timeout
+            Timeout = _timeout,
+            HttpHandlerType = _httpHandlerType
         };
     }
 }
