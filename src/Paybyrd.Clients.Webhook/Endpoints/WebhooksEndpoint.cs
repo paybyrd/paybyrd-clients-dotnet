@@ -25,7 +25,7 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
 
         var queryParametersBuilder = new QueryParametersBuilder()
             .Add("referenceId", queryWebhooks.ReferenceId)
-            .Add("storeIds", queryWebhooks.StoreIds.Select(x => x.ToString()).ToArray());
+            .Add("storeIds", queryWebhooks.StoreIds?.Select(x => x.ToString()).ToArray() ?? Array.Empty<string>());
 
         var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks{queryParametersBuilder.Build()}");
         request.Headers.Add(authorization.Key, authorization.Value);

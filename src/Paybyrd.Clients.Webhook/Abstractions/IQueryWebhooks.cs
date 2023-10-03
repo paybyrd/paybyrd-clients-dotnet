@@ -13,7 +13,7 @@ public interface IQueryWebhooks
     /// <summary>
     /// The store IDs to query webhooks for.
     /// </summary>
-    IEnumerable<long> StoreIds { get; }
+    IEnumerable<long>? StoreIds { get; }
     /// <summary>
     /// The reference ID to query webhooks for.
     /// </summary>
