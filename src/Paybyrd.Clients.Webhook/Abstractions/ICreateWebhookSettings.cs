@@ -47,7 +47,7 @@ public interface ICreateWebhookSettings
     /// <summary>
     ///     The ID of the store to create the webhook settings for.
     /// </summary>
-    long StoreId { get; }
+    long? StoreId { get; }
 
     /// <summary>
     ///     The URL to send the hooks to.

@@ -32,7 +32,7 @@ internal class CreateWebhookSettingsRequest : ICreateWebhookSettings
     public PaymentMethod[] PaymentMethods => _createWebhookSettings.PaymentMethods;
 
     [JsonPropertyName("storeId")]
-    public long StoreId => _createWebhookSettings.StoreId;
+    public long? StoreId => _createWebhookSettings.StoreId;
 
     [JsonPropertyName("url")]
     public string Url => _createWebhookSettings.Url;
