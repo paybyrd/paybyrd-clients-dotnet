@@ -25,7 +25,10 @@ public static class DependencyInjectionExtensions
                 client.Timeout = options.Timeout;
             })
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-            .AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, i => TimeSpan.FromSeconds(i)));
+            .AddTransientHttpErrorPolicy(policy => policy
+                .Or<TaskCanceledException>()
+                .OrResult(response => response.StatusCode == 0)
+                .WaitAndRetryAsync(3, i => TimeSpan.FromSeconds(i)));
 
         if (options.HttpHandlerType is not null)
         {
