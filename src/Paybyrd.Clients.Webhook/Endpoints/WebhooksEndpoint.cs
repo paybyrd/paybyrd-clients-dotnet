@@ -29,8 +29,8 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
 
         var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks{queryParametersBuilder.Build()}");
         request.Headers.Add(authorization.Key, authorization.Value);
-        request.Headers.Add("x-page", queryWebhooks.Page?.ToString());
-        request.Headers.Add("x-page-size", queryWebhooks.PageSize?.ToString());
+        request.Headers.Add("x-page", queryWebhooks.Page.ToString());
+        request.Headers.Add("x-page-size", queryWebhooks.PageSize.ToString());
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);
@@ -47,8 +47,8 @@ internal class WebhooksEndpoint : IWebhooksEndpoint
 
         var request = new HttpRequestMessage(HttpMethod.Get, $"api/v1/webhooks/{queryWebhookAttempts.WebhookId}/attempts");
         request.Headers.Add(authorization.Key, authorization.Value);
-        request.Headers.Add("x-page", queryWebhookAttempts.Page?.ToString());
-        request.Headers.Add("x-page-size", queryWebhookAttempts.PageSize?.ToString());
+        request.Headers.Add("x-page", queryWebhookAttempts.Page.ToString());
+        request.Headers.Add("x-page-size", queryWebhookAttempts.PageSize.ToString());
 
         using var client = _httpClientFactory.CreateClient(Constants.HTTP_CLIENT_KEY);
         var response = await client.SendAsync(request, cancellationToken);

@@ -5,11 +5,11 @@ public interface IQueryWebhooks
     /// <summary>
     /// The current page.
     /// </summary>
-    long? Page { get; }
+    int Page { get; }
     /// <summary>
     /// The page size.
     /// </summary>
-    long? PageSize { get; }
+    int PageSize { get; }
     /// <summary>
     /// The store IDs to query webhooks for.
     /// </summary>
