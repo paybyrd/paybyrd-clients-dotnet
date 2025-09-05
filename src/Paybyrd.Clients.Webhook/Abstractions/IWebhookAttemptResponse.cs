@@ -14,7 +14,7 @@ public interface IWebhookAttemptResponse
     /// <summary>
     /// The content response of the webhook attempt.
     /// </summary>
-    string? Content { get; }
+    object? Content { get; }
 
     internal class Converter : JsonConverter<IWebhookAttemptResponse>
     {

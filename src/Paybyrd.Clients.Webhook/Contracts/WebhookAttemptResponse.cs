@@ -9,5 +9,5 @@ internal class WebhookAttemptResponse : IWebhookAttemptResponse
     [JsonPropertyName("statusCode")]
     public HttpStatusCode StatusCode { get; set; }
     [JsonPropertyName("content")]
-    public string? Content { get; set; }
+    public object? Content { get; set; }
 }
