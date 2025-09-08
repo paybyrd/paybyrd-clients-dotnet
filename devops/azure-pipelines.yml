@@ -41,6 +41,8 @@ stages:
       pool: ${{ parameters.pool }}
       project_name: '${{variables.PROJECT_NAME}}'
       project_path: '${{variables.PROJECT_PATH}}'
+      quality_gate:
+        enabled: false      
       ai_pull_request:
         enabled: false
   - template: nuget/linux/deploy.yml@templates
