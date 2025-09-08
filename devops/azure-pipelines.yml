@@ -42,8 +42,8 @@ stages:
       project_name: '${{variables.PROJECT_NAME}}'
       project_path: '${{variables.PROJECT_PATH}}'
       quality_gate:
-        enabled: true   
-        projectKey: 'paybyrd-clients-dotnet'
+        enabled: true
+        sonar_project_key: 'paybyrd-clients-dotnet'
       ai_pull_request:
         enabled: false
   - template: nuget/linux/deploy.yml@templates
