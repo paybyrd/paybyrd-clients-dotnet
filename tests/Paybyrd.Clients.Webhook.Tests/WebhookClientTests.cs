@@ -24,7 +24,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         var createWebhookSettings = Substitute.For<ICreateWebhookSettings>();
         createWebhookSettings.Events.Returns(new[] { Event.OrderPaid });
         createWebhookSettings.PaymentMethods.Returns(new[] { PaymentMethod.Card });
-        createWebhookSettings.Url.Returns("https://webapp-stub-api-v2-stg-ktzwiryfzguhy.azurewebsites.net/api/v1/hooks");
+        createWebhookSettings.Url.Returns("https://api-webhook-stg.azurewebsites.net/api/v1/hooks");
         createWebhookSettings.CredentialType.Returns(CredentialType.ApiKey);
         createWebhookSettings.ApiKey.Returns(Guid.NewGuid().ToString());
         var settings = await client.WebhookSettings.CreateAsync(createWebhookSettings);
@@ -35,8 +35,8 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         settings.Credential.Should().NotBeNull();
         settings.Credential.Type.Should().Be(CredentialType.ApiKey.Value);
         settings.Credential.ApiKey.Should().Be(createWebhookSettings.ApiKey);
-        settings.Events.Should().BeEquivalentTo(createWebhookSettings.Events);
-        settings.PaymentMethods.Should().BeEquivalentTo(createWebhookSettings.PaymentMethods);
+        settings.Events.Should().BeEquivalentTo(createWebhookSettings.Events.Select(evt => evt.Value));
+        settings.PaymentMethods.Should().BeEquivalentTo(createWebhookSettings.PaymentMethods.Select(pm => pm.Value));
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         var createWebhookSettings = Substitute.For<ICreateWebhookSettings>();
         createWebhookSettings.Events.Returns(new[] { Event.OrderPaid });
         createWebhookSettings.PaymentMethods.Returns(new[] { PaymentMethod.Card });
-        createWebhookSettings.Url.Returns("https://webapp-stub-api-v2-stg-ktzwiryfzguhy.azurewebsites.net/api/v1/hooks");
+        createWebhookSettings.Url.Returns("https://api-webhook-stg.azurewebsites.net/api/v1/hooks");
         createWebhookSettings.Username.Returns(Guid.NewGuid().ToString());
         createWebhookSettings.Password.Returns(Guid.NewGuid().ToString());
         var settings = await client.WebhookSettings.CreateAsync(createWebhookSettings);
@@ -59,8 +59,8 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         settings.Credential.Type.Should().Be(CredentialType.Basic.Value);
         settings.Credential.Username.Should().Be(createWebhookSettings.Username);
         settings.Credential.Password.Should().Be(createWebhookSettings.Password);
-        settings.Events.Should().BeEquivalentTo(createWebhookSettings.Events);
-        settings.PaymentMethods.Should().BeEquivalentTo(createWebhookSettings.PaymentMethods);
+        settings.Events.Should().BeEquivalentTo(createWebhookSettings.Events.Select(evt => evt.Value));
+        settings.PaymentMethods.Should().BeEquivalentTo(createWebhookSettings.PaymentMethods.Select(pm => pm.Value));
     }
 
     [Fact]
@@ -72,7 +72,7 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         createWebhookSettings.StoreId.Returns(10);
         createWebhookSettings.Events.Returns(new[] { Event.OrderPaid });
         createWebhookSettings.PaymentMethods.Returns(new[] { PaymentMethod.Card });
-        createWebhookSettings.Url.Returns("https://webapp-stub-api-v2-stg-ktzwiryfzguhy.azurewebsites.net/api/v1/hooks");
+        createWebhookSettings.Url.Returns("https://api-webhook-stg.azurewebsites.net/api/v1/hooks");
         createWebhookSettings.Username.Returns(Guid.NewGuid().ToString());
         createWebhookSettings.Password.Returns(Guid.NewGuid().ToString());
         var settings = await client.WebhookSettings.CreateAsync(createWebhookSettings);
@@ -102,7 +102,10 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         await using var sp = _serviceProviderFixture.BuildServiceProvider();
         var client = sp.GetRequiredService<IWebhookClient>();
         var queryWebhookAttempts = Substitute.For<IQueryWebhookAttempts>();
-        queryWebhookAttempts.WebhookId.Returns("df49bf90-e9d3-4578-8cb2-7c66f84e95a9");
+        queryWebhookAttempts.WebhookId.Returns("c803f441-3afd-493e-a570-efaa4d80379d");
+        queryWebhookAttempts.Page.Returns(1);
+        queryWebhookAttempts.PageSize.Returns(10);
+        
         var webhookAttempts = await client.Webhooks.QueryAsync(queryWebhookAttempts);
         webhookAttempts.Should().NotBeEmpty();
     }
@@ -113,6 +116,8 @@ public class WebhookClientTests : IClassFixture<ServiceProviderFixture>
         await using var sp = _serviceProviderFixture.BuildServiceProvider();
         var client = sp.GetRequiredService<IWebhookClient>();
         var queryWebhooks = Substitute.For<IQueryWebhooks>();
+        queryWebhooks.Page.Returns(1);
+        queryWebhooks.PageSize.Returns(10);
         var webhooks = await client.Webhooks.QueryAsync(queryWebhooks);
         webhooks.Should().NotBeEmpty();
     }

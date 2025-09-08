@@ -27,7 +27,7 @@ resources:
     - repository: templates
       type: git
       name: Gateway/paybyrd-deployment
-      ref: refs/tags/5.0.2
+      ref: refs/tags/7.11.0
 
 variables:
   - template: 'variables.yml'
@@ -39,12 +39,14 @@ stages:
   - template: library/csharp/linux/build.yml@templates
     parameters:
       pool: ${{ parameters.pool }}
-      artifact_name: ${{ variables.artifact_name }}
-      projects: ${{ variables.projects }}
-      run_tests: false
+      project_name: '${{variables.PROJECT_NAME}}'
+      project_path: '${{variables.PROJECT_PATH}}'
+      quality_gate:
+        enabled: false
+      ai_pull_request:
+        enabled: false
   - template: nuget/linux/deploy.yml@templates
     parameters:
       artifact_name: ${{ variables.artifact_name }}
       pool: ${{ parameters.pool }}
       feed: 'external'
-      

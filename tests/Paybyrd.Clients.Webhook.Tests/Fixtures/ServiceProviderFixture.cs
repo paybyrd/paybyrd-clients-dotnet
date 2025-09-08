@@ -17,7 +17,7 @@ public class ServiceProviderFixture
         {
             builder
                 .WithSandboxBaseUrl()
-                .WithTimeout(TimeSpan.FromSeconds(10));
+                .WithTimeout(TimeSpan.FromSeconds(60));
         });
     }
 

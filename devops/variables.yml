@@ -1,5 +1,5 @@
 variables:
-  - name: artifact_name
+  - name: PROJECT_NAME
     value: 'Paybyrd.Clients'
-  - name: projects
+  - name: PROJECT_PATH
     value: 'src/**/*.csproj'
