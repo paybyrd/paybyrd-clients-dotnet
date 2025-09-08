@@ -47,6 +47,6 @@ stages:
         enabled: false
   - template: nuget/linux/deploy.yml@templates
     parameters:
-      artifact_name: ${{ variables.artifact_name }}
+      artifact_name: ${{ variables.PROJECT_NAME }}
       pool: ${{ parameters.pool }}
       feed: 'external'
